@@ -5,6 +5,7 @@
     --grey: #716F6F;
     --line: #DCDCDC;
     --red: #FF5959;
+    --black: #151515;
 }
 .container {
     width: 343px;
@@ -34,6 +35,14 @@
     align-items: flex-start;
     padding: 0px;
     gap: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--grey)
 }
 .date-number {
     width: 87.67px;
@@ -45,4 +54,69 @@
     gap: 16px;
     border: 1px solid var(--line);
     border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0.01em;
+    color: var(--black)
+}
+.caltulate-separator {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    width: 295px;
+    height: 64px;
+}
+.separator {
+    width: 115.5px;
+    height: 1px;
+    background: var(--line);
+}
+.btn-calculate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    width: 64px;
+    height: 64px;
+    background: var(--purple);
+    border: none;
+    border-radius: 216px;
+    cursor: pointer;
+}
+.btn-calculate img {
+    width: 24px;
+    height: 24px;
+}
+.results {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    width: 295px;
+    height: 186px;
+}
+.results-info {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 8px;
+    width: 295px;
+    height: 62px;
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    font-weight: 800;
+    font-size: 56px;
+    line-height: 110%;
+    letter-spacing: -0.02em;
+    color: var(--black);
+    margin: 0;
+}
+.results-info span {
+    color: var(--purple);
 }
