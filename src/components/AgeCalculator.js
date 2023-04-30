@@ -1,7 +1,23 @@
 import React from "react";
+import { useState } from "react";
 import "../stylesheets/AgeCalculator.css"
 import ArrowLogo from "../images/icon-arrow.svg";
 function AgeCalculator (props) {
+    // Obtaining the current date of the computer
+    const date = new Date();
+    // Current year
+    const currYYYY = date.getFullYear();
+    // Current month
+    const currMM = 1 + date.getMonth();
+    // Current day
+    const currDD = date.getDate();
+    // Total days of each month
+    const daysOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    // Creation of status variables for user inputs
+    const [year, setYear] = useState(0);
+    const [month, setMonth] = useState(0);
+    const [day, setDay] = useState(0);
+
     return(
         <div className="container">
             <div className="date-inputs">
