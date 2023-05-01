@@ -3,40 +3,68 @@ import { useState } from "react";
 import "../stylesheets/AgeCalculator.css"
 import ArrowLogo from "../images/icon-arrow.svg";
 function AgeCalculator (props) {
-    // Obtaining the current date from device
-    const date = new Date();
-    // Current year
-    let currYYYY = date.getFullYear();
-    // Current month
-    let currMM = 1 + date.getMonth();
-    // Current day
-    let currDD = date.getDate();
-    // Total days of each month
-    const daysOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    // Creation of status variables for user inputs
-    const [year, setYear] = useState(0);
-    const [month, setMonth] = useState(0);
-    const [day, setDay] = useState(0);
-    // Method for handling submit
-    const handleSubmit = () => {
-        setYear(document.getElementById('year').value);
-        setMonth(document.getElementById('month').value);
-        setDay(document.getElementById('day').value);
-    }
-    // Conditions and calculus
-    if(day > currDD) {
-        currDD = currDD + daysOfMonth[currMM - 1];
-        currMM = currMM - 1;
-    }
-    if(month > currMM) {
-        currMM = currMM + 12;
-        currYYYY = currYYYY - 1;
-    }
-    // Results
-    const d = currDD - day;
-    const m = currMM - month;
-    const y = currYYYY - year;
+    // // Obtaining the current date from device
+    // const date = new Date();
+    // // Current year
+    // let currYYYY = date.getFullYear();
+    // // Current month
+    // let currMM = 1 + date.getMonth();
+    // // Current day
+    // let currDD = date.getDate();
+    // // Total days of each month
+    // const daysOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    // // Creation of status variables for user inputs
+    // const [year, setYear] = useState(0);
+    // const [month, setMonth] = useState(0);
+    // const [day, setDay] = useState(0);
+    // // Method for handling submit
+    // const handleSubmit = () => {
+    //     setYear(document.getElementById('year').value);
+    //     setMonth(document.getElementById('month').value);
+    //     setDay(document.getElementById('day').value);
+    // }
+    // // Conditions and calculus
+    // if(day > currDD) {
+    //     currDD = currDD + daysOfMonth[currMM - 1];
+    //     currMM = currMM - 1;
+    // }
+    // if(month > currMM) {
+    //     currMM = currMM + 12;
+    //     currYYYY = currYYYY - 1;
+    // }
+    // // Results
+    // const d = currDD - day;
+    // const m = currMM - month;
+    // const y = currYYYY - year;
 
+    // Other way
+    // Actual date
+    const actualDate = new Date();
+    // const actualDateYear = actualDate.getUTCFullYear();
+    // const actualDateMonth = actualDate.getUTCMonth();
+    const actualDateDay = actualDate.getUTCDate();
+    // Hook for user's date of birth
+    const [birth, setBirth] = useState({year: "--", month: "--", day: "--" })
+    // Handle user's input
+    const handleChange = () => {
+        setBirth({
+            ...birth,
+            year: document.getElementById('year').value,
+            month: document.getElementById('month').value,
+            day: document.getElementById('day').value
+        })
+    }
+    // Date of Birth
+    const dateOfBirth = new Date(birth.year, birth.month, birth.day)
+    // Diference between the date of birth and the actual date
+    const diff = new Date(Date.now() - dateOfBirth.getTime());
+    // Age calculation from difference
+    const age = {
+        years: Math.abs(diff.getUTCFullYear() - 1970),
+        months: Math.abs(diff.getUTCMonth() + 1),
+        days: Math.abs(diff.getUTCDate() - actualDateDay)
+    }
+    console.log(age);
     return(
         <div className="container">
             <div className="date-inputs">
@@ -46,13 +74,13 @@ function AgeCalculator (props) {
             </div>
             <div className="caltulate-separator">
                 <div className="separator"></div>
-                <button className="btn-calculate" type="submit" onClick={handleSubmit}><img src={ArrowLogo} alt="Arrow logo"/></button>
+                <button className="btn-calculate" type="submit" onClick={handleChange}><img src={ArrowLogo} alt="Arrow logo"/></button>
                 <div className="separator"></div>
             </div>
             <div className="results">
-                <p className="results-info"><span>{y}</span> year</p>
-                <p className="results-info"><span>{m}</span> months</p>
-                <p className="results-info"><span>{d}</span> days</p>
+                <p className="results-info"><span>{age.years ? age.years : "--"}</span> year</p>
+                <p className="results-info"><span>{age.months ? age.months : "--"}</span> months</p>
+                <p className="results-info"><span>{age.days ? age.days : "--"}</span> days</p>
             </div>
         </div>
     )
