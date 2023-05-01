@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../stylesheets/AgeCalculator.css"
 import ArrowLogo from "../images/icon-arrow.svg";
 function AgeCalculator (props) {
@@ -37,7 +37,7 @@ function AgeCalculator (props) {
     // const m = currMM - month;
     // const y = currYYYY - year;
 
-    // Other way
+    // Other way!!
     // Actual date
     const actualDate = new Date();
     // const actualDateYear = actualDate.getUTCFullYear();
@@ -46,7 +46,8 @@ function AgeCalculator (props) {
     // Hook for user's date of birth
     const [birth, setBirth] = useState({year: "--", month: "--", day: "--" })
     // Handle user's input
-    const handleChange = () => {
+    const handleChange = e => {
+        e.preventDefault();
         setBirth({
             ...birth,
             year: document.getElementById('year').value,
@@ -54,6 +55,19 @@ function AgeCalculator (props) {
             day: document.getElementById('day').value
         })
     }
+    //Enter keydown control
+    useEffect(() => {
+        const keyDownHandler = e => {
+            if(e.key === 'Enter') {
+                e.preventDefault();
+                handleChange();
+            }
+        };
+        document.addEventListener('keydown', keyDownHandler);
+        return () => {
+            document.removeEventListener('keydown', keyDownHandler);
+        }
+    });
     // Date of Birth
     const dateOfBirth = new Date(birth.year, birth.month, birth.day)
     // Diference between the date of birth and the actual date
