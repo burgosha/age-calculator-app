@@ -47,13 +47,30 @@ function AgeCalculator (props) {
     const [birth, setBirth] = useState({year: "--", month: "--", day: "--" })
     // Handle user's input
     const handleChange = e => {
+        // Prevent page reload
         e.preventDefault();
-        setBirth({
-            ...birth,
-            year: document.getElementById('year').value,
-            month: document.getElementById('month').value,
-            day: document.getElementById('day').value
-        })
+        //Variables
+        const y = document.getElementById('year').value;
+        const m = document.getElementById('month').value;
+        const d = document.getElementById('day').value
+        // Check valid date input
+        const monthDays = new Date(y, m, 0).getDate();
+        if(d < monthDays) {
+            setBirth({
+                ...birth,
+                year: y,
+                month: m,
+                day: d
+            })
+        } else {
+            setBirth({
+                ...birth,
+                year: "--",
+                month: "--",
+                day: "--"
+            })
+            console.log("Ingrese una fecha correcta")
+        }
     }
     //Enter keydown control
     useEffect(() => {
@@ -78,7 +95,6 @@ function AgeCalculator (props) {
         months: Math.abs(diff.getUTCMonth() + 1),
         days: Math.abs(diff.getUTCDate() - actualDateDay)
     }
-    console.log(age);
     return(
         <div className="container">
             <div className="date-inputs">
