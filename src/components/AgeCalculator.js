@@ -47,7 +47,7 @@ function AgeCalculator (props) {
     // Hook for user's date of birth
     const [birth, setBirth] = useState({year: "--", month: "--", day: "--" })
     // Handle user's input
-    const handleChange = () => {
+    const handleUserSubmit = () => {
         // Prevent page reload
         // e.preventDefault();
         //Variables
@@ -56,7 +56,7 @@ function AgeCalculator (props) {
         const d = Number(document.getElementById('day').value);
         const monthDays = new Date(y, m, 0).getDate();
         // Check valid date input
-        if(d <= monthDays && y < actualDateYear) {
+        if(d <= monthDays && y <= actualDateYear) {
             setBirth({
                 ...birth,
                 year: y,
@@ -78,7 +78,7 @@ function AgeCalculator (props) {
         const keyDownHandler = e => {
             if(e.key === 'Enter') {
                 // e.preventDefault();
-                handleChange();
+                handleUserSubmit();
             }
         };
         document.addEventListener('keydown', keyDownHandler);
@@ -100,27 +100,82 @@ function AgeCalculator (props) {
     if(age.months === 12) {
         age.years += 1;
         age.months = "0";
-    } else if (age.years && age.months && !age.days) {
-        age.days = "0";
-    } else if (!age.years && age.months && age.days) {
-        age.years = "0"
     }
+    else if (age.years && age.months && !age.days) {
+         age.days = "0";
+    } else if (!age.years && age.months && age.days) {
+        age.years = "0";
+    } else if (!age.years && age.months && !age.days) {
+        age.years = "0"
+        age.days = "0";
+    }
+
+    //START
+    //CALCULATE CURRENT DATE
+    const currDate = new Date();
+    const currYYYY = currDate.getFullYear();
+    const currMM = currDate.getMonth() + 1;
+    const currDD = currDate.getDate();
+    //HANDLE USER'S BIRTH
+    const [userBirth, setUserBirth] = useState({
+        year: "--",
+        month: "--",
+        day: "--"
+    });
+    const handleChange = (event) => {
+        const y = Number(document.getElementById("year").value);
+        const m = Number(document.getElementById("month").value);
+        const d = Number(document.getElementById("day").value);
+        const monthDays = new Date(y, m, 0).getDate();
+        if (d <= monthDays && y <= currYYYY) {
+            setUserBirth({
+                ...userBirth,
+                [event.target.name] : event.target.value
+            });
+        } else {
+            setUserBirth({
+                ...userBirth,
+                year : "--",
+                month : "--",
+                day : "--"
+            });
+            // Add toggle visibility
+        }
+    };
+    console.log(userBirth);
+    //CALCULATE AGE
+    const [userAge, setUserAge] = useState({
+        years: "--",
+        months: "--",
+        days: "--"
+    });
+    const handleSubmit = (event) => {
+        const dob = new Date(userBirth.year, userBirth.month, userBirth.day);
+        const diff = new Date(Date.now() - dob.getTime());
+        setUserAge({
+            ...userAge,
+            years : Math.abs(diff.getUTCFullYear() - 1970),
+            months : Math.abs(diff.getUTCMonth() + 1),
+            days: Math.abs(diff.getUTCDate() - currDD)
+        });
+    };
+    console.log(userAge);
     return(
         <div className="container">
             <div className="date-inputs">
-                <label>Day <input className="date-number" type="number" placeholder="DD" id="day" name="day" required="required" minLength="1" maxLength="2" /></label>
-                <label>Month <input className="date-number" type="number" placeholder="MM" id="month" name="month" required="required" minLength="1" maxLength="2" /></label>
-                <label>Year <input className="date-number" type="number" placeholder="YYYY" id="year" name="year" required="required" minLength="4" maxLength="4" /></label>
+                <label>Day <input className="date-number" type="number" placeholder="DD" id="day" name="day" required="required" minLength="1" maxLength="2" onChange={handleChange} /></label>
+                <label>Month <input className="date-number" type="number" placeholder="MM" id="month" name="month" required="required" minLength="1" maxLength="2" onChange={handleChange} /></label>
+                <label>Year <input className="date-number" type="number" placeholder="YYYY" id="year" name="year" required="required" minLength="4" maxLength="4" onChange={handleChange} /></label>
             </div>
             <div className="caltulate-separator">
                 <div className="separator"></div>
-                <button className="btn-calculate" type="submit" onClick={handleChange}><img src={ArrowLogo} alt="Arrow logo"/></button>
+                <button className="btn-calculate" type="submit" onClick={handleSubmit}><img src={ArrowLogo} alt="Arrow logo"/></button>
                 <div className="separator"></div>
             </div>
             <div className="results">
-                <p className="results-info"><span>{age.years ? age.years : "--"}</span> year</p>
-                <p className="results-info"><span>{age.months ? age.months : "--"}</span> months</p>
-                <p className="results-info"><span>{age.days ? age.days : "--"}</span> days</p>
+                <p className="results-info"><span>{userAge.years ? userAge.years : userAge.years === 0 ? userAge.years : "--"}</span> year</p>
+                <p className="results-info"><span>{userAge.months ? userAge.months : userAge.months === 0 ? userAge.months : "--"}</span> months</p>
+                <p className="results-info"><span>{userAge.days ? userAge.days : userAge.days === 0 ? userAge.days : "--"}</span> days</p>
             </div>
         </div>
     )
