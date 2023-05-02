@@ -133,12 +133,12 @@ function AgeCalculator (props) {
                 [event.target.name] : event.target.value
             });
         } else {
-            setUserBirth({
-                ...userBirth,
-                year : "--",
-                month : "--",
-                day : "--"
-            });
+            // setUserBirth({
+            //     ...userBirth,
+            //     year : "--",
+            //     month : "--",
+            //     day : "--"
+            // });
             // Add toggle visibility
         }
     };
@@ -149,7 +149,7 @@ function AgeCalculator (props) {
         months: "--",
         days: "--"
     });
-    const handleSubmit = (event) => {
+    const handleSubmit = () => {
         const dob = new Date(userBirth.year, userBirth.month, userBirth.day);
         const diff = new Date(Date.now() - dob.getTime());
         setUserAge({
@@ -158,6 +158,14 @@ function AgeCalculator (props) {
             months : Math.abs(diff.getUTCMonth() + 1),
             days: Math.abs(diff.getUTCDate() - currDD)
         });
+        //Age correction
+        if(userAge.months === 12) {
+            setUserAge({
+                ...userAge,
+                years: Math.abs(diff.getUTCFullYear() - 1970 + 1),
+                months: "0"
+            })
+        }
     };
     console.log(userAge);
     return(
