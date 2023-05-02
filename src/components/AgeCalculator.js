@@ -40,9 +40,10 @@ function AgeCalculator (props) {
     // Other way!!
     // Actual date
     const actualDate = new Date();
-    // const actualDateYear = actualDate.getUTCFullYear();
-    // const actualDateMonth = actualDate.getUTCMonth();
+    const actualDateYear = actualDate.getUTCFullYear();
+    const actualDateMonth = actualDate.getUTCMonth() + 1;
     const actualDateDay = actualDate.getUTCDate();
+
     // Hook for user's date of birth
     const [birth, setBirth] = useState({year: "--", month: "--", day: "--" })
     // Handle user's input
@@ -50,12 +51,12 @@ function AgeCalculator (props) {
         // Prevent page reload
         e.preventDefault();
         //Variables
-        const y = document.getElementById('year').value;
-        const m = document.getElementById('month').value;
-        const d = document.getElementById('day').value
-        // Check valid date input
+        const y = Number(document.getElementById('year').value);
+        const m = Number(document.getElementById('month').value);
+        const d = Number(document.getElementById('day').value);
         const monthDays = new Date(y, m, 0).getDate();
-        if(d < monthDays) {
+        // Check valid date input
+        if(d <= monthDays && y < actualDateYear) {
             setBirth({
                 ...birth,
                 year: y,
@@ -94,6 +95,11 @@ function AgeCalculator (props) {
         years: Math.abs(diff.getUTCFullYear() - 1970),
         months: Math.abs(diff.getUTCMonth() + 1),
         days: Math.abs(diff.getUTCDate() - actualDateDay)
+    }
+    // Age correction
+    if(age.months === 12) {
+        age.years += 1;
+        age.months = "0";
     }
     return(
         <div className="container">
