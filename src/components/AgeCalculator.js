@@ -47,9 +47,9 @@ function AgeCalculator (props) {
     // Hook for user's date of birth
     const [birth, setBirth] = useState({year: "--", month: "--", day: "--" })
     // Handle user's input
-    const handleChange = e => {
+    const handleChange = () => {
         // Prevent page reload
-        e.preventDefault();
+        // e.preventDefault();
         //Variables
         const y = Number(document.getElementById('year').value);
         const m = Number(document.getElementById('month').value);
@@ -77,7 +77,7 @@ function AgeCalculator (props) {
     useEffect(() => {
         const keyDownHandler = e => {
             if(e.key === 'Enter') {
-                e.preventDefault();
+                // e.preventDefault();
                 handleChange();
             }
         };
@@ -96,10 +96,14 @@ function AgeCalculator (props) {
         months: Math.abs(diff.getUTCMonth() + 1),
         days: Math.abs(diff.getUTCDate() - actualDateDay)
     }
-    // Age correction
+    // Age corrections
     if(age.months === 12) {
         age.years += 1;
         age.months = "0";
+    } else if (age.years && age.months && !age.days) {
+        age.days = "0";
+    } else if (!age.years && age.months && age.days) {
+        age.years = "0"
     }
     return(
         <div className="container">
