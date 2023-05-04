@@ -26,7 +26,7 @@ function AgeCalculator (props) {
         const m = Number(document.getElementById("month").value);
         const d = Number(document.getElementById("day").value);
         const monthDays = new Date(y, m, 0).getDate();
-        if (d <= monthDays && y <= currYYYY) {
+        if (d <= monthDays && y <= currYYYY && m < 12) {
             setUserBirth({
                 ...userBirth,
                 [event.target.name] : event.target.value
@@ -43,6 +43,13 @@ function AgeCalculator (props) {
                 days: "--"
             })
             // Add toggle visibility
+            if(monthDays < d) {
+                console.log("Must be a valid day")
+            } else if (12 <= m) {
+                console.log("Must be a valid month")
+            } else if (currYYYY < y) {
+                console.log("Must be in the past")
+            }
         }
     };
     //HANDLE SUBMIT - CALCULATE AGE
@@ -97,7 +104,7 @@ function AgeCalculator (props) {
                 <div className="separator"></div>
             </div>
             <div className="results">
-                <p className="results-info"><span>{userAge.years ? userAge.years : userAge.years === 0 ? userAge.years : "--"}</span> year</p>
+                <p className="results-info"><span>{userAge.years ? userAge.years : userAge.years === 0 ? userAge.years : "--"}</span> years</p>
                 <p className="results-info"><span>{userAge.months ? userAge.months : userAge.months === 0 ? userAge.months : "--"}</span> months</p>
                 <p className="results-info"><span>{userAge.days ? userAge.days : userAge.days === 0 ? userAge.days : "--"}</span> days</p>
             </div>
