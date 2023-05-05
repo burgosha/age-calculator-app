@@ -20,6 +20,7 @@ function AgeCalculator (props) {
         months: "--",
         days: "--"
     });
+    const [errors, setErrors] = useState({invalidDay: false, invalidMonth: false, invalidYear: false, invalideDate: false})
     //HANDLE USER'S BIRTH
     const handleChange = (event) => {
         const y = Number(document.getElementById("year").value);
@@ -44,7 +45,7 @@ function AgeCalculator (props) {
             })
             // Add toggle visibility
             if(monthDays < d) {
-                console.log("Must be a valid day")
+                setErrors({invalidDay: true})
             } else if (12 <= m) {
                 console.log("Must be a valid month")
             } else if (currYYYY < y) {
@@ -94,7 +95,7 @@ function AgeCalculator (props) {
     return(
         <div className="container">
             <div className="date-inputs">
-                <label>Day <input className="date-number" type="number" placeholder="DD" id="day" name="day" required="required" minLength="1" maxLength="2" onChange={handleChange} /></label>
+                <label>Day <input className="date-number" type="number" placeholder="DD" id="day" name="day" required="required" minLength="1" maxLength="2" onChange={handleChange} />{ errors.invalidDay ? "Ingrese un día valido" : "" }</label>
                 <label>Month <input className="date-number" type="number" placeholder="MM" id="month" name="month" required="required" minLength="1" maxLength="2" onChange={handleChange} /></label>
                 <label>Year <input className="date-number" type="number" placeholder="YYYY" id="year" name="year" required="required" minLength="4" maxLength="4" onChange={handleChange} /></label>
             </div>
