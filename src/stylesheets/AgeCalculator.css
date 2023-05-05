@@ -42,7 +42,7 @@
     line-height: 18px;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--grey)
+    color: var(--grey);
 }
 .date-number {
     width: 87.67px;
@@ -69,8 +69,8 @@
     font-family: 'Poppins', sans-serif;
     font-style: italic;
     font-weight: 400;
-    font-size: 12px;
-    line-height: 21px;
+    font-size: 10px;
+    line-height: 15px;
     color: var(--red);
     text-transform: none;
     letter-spacing: normal;
