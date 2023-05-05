@@ -95,7 +95,7 @@ function AgeCalculator (props) {
     return(
         <div className="container">
             <div className="date-inputs">
-                <label>Day <input className="date-number" type="number" placeholder="DD" id="day" name="day" required="required" minLength="1" maxLength="2" onChange={handleChange} />{ errors.invalidDay ? "Ingrese un día valido" : "" }</label>
+                <label>Day <input className={!errors.invalidDay ? "date-number" : "date-number error"} type="number" placeholder="DD" id="day" name="day" required="required" minLength="1" maxLength="2" onChange={handleChange} />{ errors.invalidDay ? <span className="error-type">Must be a valid day</span> : "" }</label>
                 <label>Month <input className="date-number" type="number" placeholder="MM" id="month" name="month" required="required" minLength="1" maxLength="2" onChange={handleChange} /></label>
                 <label>Year <input className="date-number" type="number" placeholder="YYYY" id="year" name="year" required="required" minLength="4" maxLength="4" onChange={handleChange} /></label>
             </div>
