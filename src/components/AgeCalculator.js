@@ -3,40 +3,65 @@ import { useEffect, useState } from "react";
 import "../stylesheets/AgeCalculator.css"
 import ArrowLogo from "../images/icon-arrow.svg";
 
-function isValidDate(day, month, year) {
-    const date= newDate(year, month - 1, day);
-    return(
-        date.getFullYear() === year &&
-        date.getMonth() === month - 1 &&
-        date.getDate() === day
-    );
-}
-
-function calculateAge(day, month, year) {
-    const today = new Date();
-    const birthDate = new Date(year, month - 1, day);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    if(monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
-    return age;
-}
-
-function AgeCalculator (props) {
+function AgeCalculator() {
     const [day, setDay] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
-    const [age, setAge] = useState ("");
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if(isValidDate(day, month, year)) {
-            setAge(calculateAge(day,month, year));
-        } else {
-            alert("Fecha invalida.");
-        }
+    const [age, setAge] = useState("");
+  
+    const isValidDate = (day, month, year) => {
+      const date = new Date(year, month - 1, day);
+      return (
+        date.getFullYear() === year &&
+        date.getMonth() + 1 === month &&
+        date.getDate() === day
+      );
     };
+  
+    const calculateAge = (day, month, year) => {
+      const today = new Date();
+      const birthDate = new Date(year, month - 1, day);
+      let ageYears = today.getFullYear() - birthDate.getFullYear();
+      let ageMonths = today.getMonth() - birthDate.getMonth();
+      let ageDays = today.getDate() - birthDate.getDate();
+  
+      if (ageMonths < 0 || (ageMonths === 0 && ageDays < 0)) {
+        ageYears--;
+        ageMonths += 12;
+        if (ageDays < 0) {
+          const monthDays = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+          ageDays += monthDays;
+          ageMonths--;
+        }
+      } else if (ageMonths > 0 && ageDays < 0) {
+        const prevMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const prevMonthDays = new Date(prevMonth.getFullYear(), prevMonth.getMonth() + 1, 0).getDate();
+        ageDays += prevMonthDays;
+        ageMonths--;
+      }
+  
+      return {
+        years: ageYears,
+        months: ageMonths,
+        days: ageDays,
+      };
+    };
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      if (!isValidDate(day, month, year)) {
+        alert("Fecha inválida.");
+      } else if (!day || day < 1 || day > 31) {
+        alert("Día inválido.");
+      } else if (!month || month < 1 || month > 12) {
+        alert("Mes inválido.");
+      } else if (!year || year < 1900 || year > new Date().getFullYear()) {
+        alert("Año inválido.");
+      } else {
+        setAge(calculateAge(day, month, year));
+      }
+    };
+  
     // //START
     // //CALCULATE CURRENT DATE
     // const currDate = new Date();
@@ -131,20 +156,20 @@ function AgeCalculator (props) {
         <div className="container">
             <form onSubmit={handleSubmit}>
             <div className="date-inputs">
-                <label>Day <input className={!errors.invalidDay ? "date-number" : "date-number error"} type="number" placeholder="DD" id="day" name="day" required="required" minLength="1" maxLength="2" onChange={handleChange} />{ errors.invalidDay ? <span className="error-type">Must be a valid day</span> : "" }</label>
-                <label>Month <input className={!errors.invalidMonth ? "date-number" : "date-number error"} type="number" placeholder="MM" id="month" name="month" required="required" minLength="1" maxLength="2" onChange={handleChange} />{ errors.invalidMonth ? <div className="error-type">Must be a valid month</div> : "" }</label>
-                <label>Year <input className="date-number" type="number" placeholder="YYYY" id="year" name="year" required="required" minLength="4" maxLength="4" onChange={handleChange} /></label>
+                <label>Day <input className="date-number" type="number" placeholder="DD" id="day" name="day" required="required" value={day} onChange={(event) => setDay(event.target.value)}/></label>
+                <label>Month <input className="date-number" type="number" placeholder="MM" id="month" name="month" required="required" minLength="1" maxLength="2" value={month} onChange={(event) => setMonth(event.target.value)} /></label>
+                <label>Year <input className="date-number" type="number" placeholder="YYYY" id="year" name="year" required="required" minLength="4" maxLength="4" value={year} onChange={(event) => setYear(event.target.value)} /></label>
             </div>
             <div className="caltulate-separator">
                 <div className="separator"></div>
-                <button className="btn-calculate" type="submit" onClick={handleSubmit}><img src={ArrowLogo} alt="Arrow logo"/></button>
+                <button className="btn-calculate" type="submit" ><img src={ArrowLogo} alt="Arrow logo"/></button>
                 <div className="separator"></div>
             </div>
             </form>
             <div className="results">
-                <p className="results-info"><span>{userAge.years ? userAge.years : userAge.years === 0 ? userAge.years : "--"}</span> years</p>
-                <p className="results-info"><span>{userAge.months ? userAge.months : userAge.months === 0 ? userAge.months : "--"}</span> months</p>
-                <p className="results-info"><span>{userAge.days ? userAge.days : userAge.days === 0 ? userAge.days : "--"}</span> days</p>
+                <p className="results-info"><span>{age.years}</span> years</p>
+                <p className="results-info"><span>{age.months}</span> months</p>
+                <p className="results-info"><span>{age.days}</span> days</p>
             </div>
         </div>
     )
