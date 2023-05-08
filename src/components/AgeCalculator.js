@@ -156,13 +156,54 @@ function AgeCalculator() {
         <div className="container">
             <form onSubmit={handleSubmit}>
             <div className="date-inputs">
-                <label>Day <input className="date-number" type="number" placeholder="DD" id="day" name="day" required="required" value={day} onChange={(event) => setDay(event.target.value)}/></label>
-                <label>Month <input className="date-number" type="number" placeholder="MM" id="month" name="month" required="required" minLength="1" maxLength="2" value={month} onChange={(event) => setMonth(event.target.value)} /></label>
-                <label>Year <input className="date-number" type="number" placeholder="YYYY" id="year" name="year" required="required" minLength="4" maxLength="4" value={year} onChange={(event) => setYear(event.target.value)} /></label>
+                <label>Day
+                  <input 
+                  className="date-number" 
+                  type="number" 
+                  placeholder="DD" 
+                  id="day" 
+                  name="day" 
+                  required="required" 
+                  value={day} 
+                  onChange={(event) => setDay(parseInt(event.target.value))}
+                  />
+                </label>
+                <label>Month
+                  <input 
+                  className="date-number" 
+                  type="number" 
+                  placeholder="MM" 
+                  id="month" 
+                  name="month" 
+                  required="required" 
+                  minLength="1" 
+                  maxLength="2" 
+                  value={month} 
+                  onChange={(event) => setMonth(parseInt(event.target.value))} 
+                  />
+                </label>
+                <label>Year
+                  <input className="date-number"
+                  type="number" 
+                  placeholder="YYYY" 
+                  id="year" 
+                  name="year" 
+                  required="required" 
+                  minLength="4" 
+                  maxLength="4" 
+                  value={year} 
+                  onChange={(event) => setYear(parseInt(event.target.value))} 
+                  />
+                </label>
             </div>
             <div className="caltulate-separator">
-                <div className="separator"></div>
-                <button className="btn-calculate" type="submit" ><img src={ArrowLogo} alt="Arrow logo"/></button>
+                <div className="separator">
+                </div>
+                <button 
+                className="btn-calculate" 
+                type="submit">
+                  <img src={ArrowLogo} alt="Arrow logo"/>
+                </button>
                 <div className="separator"></div>
             </div>
             </form>
