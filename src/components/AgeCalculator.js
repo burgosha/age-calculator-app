@@ -24,6 +24,19 @@ function calculateAge(day, month, year) {
 }
 
 function AgeCalculator (props) {
+    const [day, setDay] = useState("");
+    const [month, setMonth] = useState("");
+    const [year, setYear] = useState("");
+    const [age, setAge] = useState ("");
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if(isValidDate(day, month, year)) {
+            setAge(calculateAge(day,month, year));
+        } else {
+            alert("Fecha invalida.");
+        }
+    };
     // //START
     // //CALCULATE CURRENT DATE
     // const currDate = new Date();
@@ -116,7 +129,7 @@ function AgeCalculator (props) {
 
     return(
         <div className="container">
-            <form>
+            <form onSubmit={handleSubmit}>
             <div className="date-inputs">
                 <label>Day <input className={!errors.invalidDay ? "date-number" : "date-number error"} type="number" placeholder="DD" id="day" name="day" required="required" minLength="1" maxLength="2" onChange={handleChange} />{ errors.invalidDay ? <span className="error-type">Must be a valid day</span> : "" }</label>
                 <label>Month <input className={!errors.invalidMonth ? "date-number" : "date-number error"} type="number" placeholder="MM" id="month" name="month" required="required" minLength="1" maxLength="2" onChange={handleChange} />{ errors.invalidMonth ? <div className="error-type">Must be a valid month</div> : "" }</label>
