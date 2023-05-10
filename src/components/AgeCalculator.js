@@ -46,19 +46,45 @@ function AgeCalculator() {
         days: ageDays,
       };
     };
+
+    const [errors, setErrors] = useState({
+      invalidDay: false,
+      invalidMonth: false,
+      invalidYear: false,
+      invalidDate: false
+    });
   
     const handleSubmit = (event) => {
       event.preventDefault();
       if (!isValidDate(day, month, year)) {
-        alert("Fecha inválida.");
+        setErrors({
+          ...errors,
+          invalidDate : true
+        });
       } else if (!day || day < 1 || day > 31) {
-        alert("Día inválido.");
+        setErrors({
+          ...errors,
+          invalidDay : true
+        });
       } else if (!month || month < 1 || month > 12) {
-        alert("Mes inválido.");
+        setErrors({
+          ...errors,
+          invalidMonth : true
+        });
       } else if (!year || year < 1900 || year > new Date().getFullYear()) {
-        alert("Año inválido.");
+        setErrors({
+          ...errors,
+          invalidYear : true
+        });
       } else {
         setAge(calculateAge(day, month, year));
+        setErrors({
+          ...errors,
+          invalidDay : false,
+          invalidMonth : false,
+          invalidYear : false,
+          invalidDate : false
+      })
       }
     };
   
