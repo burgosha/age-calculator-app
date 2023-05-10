@@ -193,7 +193,9 @@ function AgeCalculator() {
                   value={day} 
                   onChange={(event) => setDay(parseInt(event.target.value))}
                   />
-                  {(day && (day < 1 || day > 31)) ? <span className="error-type">Must be a valid day</span> : ""}
+                  {((day && (day < 1 || day > 31)) && 
+              !(month && (month < 1 || month > 12)) && 
+              !(year && year > new Date().getFullYear())) ? <span className="error-type">Must be a valid day</span> : ""}
                 </label>
                 <label>Month
                   <input 
@@ -208,7 +210,9 @@ function AgeCalculator() {
                   value={month} 
                   onChange={(event) => setMonth(parseInt(event.target.value))} 
                   />
-                  {(month && (month < 1 || month > 12)) ? <span className="error-type">Must be a valid month</span> : ""}                  
+                  {(!(day && (day < 1 || day > 31)) && 
+              (month && (month < 1 || month > 12)) && 
+              !(year && year > new Date().getFullYear())) ? <span className="error-type">Must be a valid month</span> : ""}                  
                 </label>
                 <label>Year
                   <input className="date-number"
@@ -222,9 +226,14 @@ function AgeCalculator() {
                   value={year} 
                   onChange={(event) => setYear(parseInt(event.target.value))} 
                   />
-                  {(year && year > new Date().getFullYear()) ? <span className="error-type">Must be in the past</span> : ""}
+                  {(!(day && (day < 1 || day > 31)) && 
+                  !(month && (month < 1 || month > 12)) && 
+                  (year && year > new Date().getFullYear())) ? <span className="error-type">Must be in the past</span> : ""}
                 </label>
-              {!isValidDate(day, month, year) ? <span className="error-type">Must be a valid date</span> : ""}
+              {((day && (day < 1 || day > 31)) && 
+              (month && (month < 1 || month > 12)) && 
+              (year && year > new Date().getFullYear())) ? 
+              <span className="error-type">Must be a valid date</span> : ""}
             </div>
             <div className="caltulate-separator">
                 <div className="separator">
