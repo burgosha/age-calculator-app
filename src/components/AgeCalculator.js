@@ -230,6 +230,9 @@ function AgeCalculator() {
                   !(month && (month < 1 || month > 12)) && 
                   (year && year > new Date().getFullYear())) ? <span className="error-type">Must be in the past</span> : ""}
                 </label>
+            </div>
+            <div>
+
               {((day && (day < 1 || day > 31)) && 
               (month && (month < 1 || month > 12)) && 
               (year && year > new Date().getFullYear())) ? 
