@@ -197,7 +197,9 @@ function AgeCalculator() {
                   ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
                   ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
                   ? 
-                  <span className="error-type">Must be a valid day</span> 
+                  <span className="error-type">Must be a valid day</span>  :
+                  ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) 
+                  ? <span className="error-type">Must be a valid date</span>
                   : ""}
                 </label>
                 <label>Month
@@ -216,9 +218,7 @@ function AgeCalculator() {
                   {((!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear()))) ||
                   ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
                   (!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
-                  ? <span className="error-type">Must be a valid month</span> :
-                  ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) 
-                  ? <span className="error-type">Must be a valid date</span> 
+                  ? <span className="error-type">Must be a valid month</span> 
                   : ""}                  
                 </label>
                 <label>Year
