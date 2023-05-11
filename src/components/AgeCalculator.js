@@ -216,7 +216,10 @@ function AgeCalculator() {
                   {((!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear()))) ||
                   ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
                   (!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
-                  ? <span className="error-type">Must be a valid month</span> : ""}                  
+                  ? <span className="error-type">Must be a valid month</span> :
+                  ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) 
+                  ? <span className="error-type">Must be a valid date</span> 
+                  : ""}                  
                 </label>
                 <label>Year
                   <input className="date-number"
@@ -235,13 +238,6 @@ function AgeCalculator() {
                   ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
                   ? <span className="error-type">Must be in the past</span> : ""}
                 </label>
-            </div>
-            <div>
-
-              {((day && (day < 1 || day > 31)) && 
-              (month && (month < 1 || month > 12)) && 
-              (year && year > new Date().getFullYear())) ? 
-              <span className="error-type">Must be a valid date</span> : ""}
             </div>
             <div className="caltulate-separator">
                 <div className="separator">
