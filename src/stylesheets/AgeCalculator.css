@@ -150,7 +150,7 @@
         flex-direction: row;
         align-items: flex-start;
         padding: 0px;
-        margin-bottom: 32px;
+        margin-bottom: 16px;
         gap: 32px;
     }
     .date-inputs label {
@@ -190,5 +190,17 @@
     .btn-calculate img {
         width: 44px;
         height: 44px;
+    }
+    .results {
+        width: 728px;
+        height: 342px;
+    }
+    .results-info {
+        width: 728px;
+        height: 114px;
+        font-size: 104px;
+        line-height: 110%;
+        letter-spacing: -0.02em;
+        color: var(--black);
     }
 }
