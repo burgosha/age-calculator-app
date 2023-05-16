@@ -101,26 +101,10 @@ function AgeCalculator() {
                   : ""}
                 </label>
                 <label
-                  style={{color:
-                    (((!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear()))) ||
-                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
-                    (!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())))
-                    ? "#FF5959" : 
-                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) 
-                    ? "#FF5959"
-                    : ""
-                  }}
+                  style={{color: isInvalidMonth || isInvalidDate ? "#FF5959" : "" }}
                 >Month
                   <input 
-                  className={
-                    (((!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear()))) ||
-                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
-                    (!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())))
-                    ? "date-number error" : 
-                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) 
-                    ? "date-number error"
-                    : "date-number"
-                  } 
+                  className={ isInvalidMonth || isInvalidDate ? "date-number error" : "date-number" } 
                   type="number" 
                   placeholder="MM" 
                   id="month" 
@@ -131,32 +115,14 @@ function AgeCalculator() {
                   value={month} 
                   onChange={(event) => setMonth(parseInt(event.target.value))} 
                   />
-                  {((!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear()))) ||
-                  ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
-                  (!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
+                  { isInvalidMonth
                   ? <span className="error-type">Must be a valid month</span> 
                   : ""}                  
                 </label>
                 <label
-                  style={{ color:
-                    (((!(day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))) ||
-                    (!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) ||
-                    ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())))
-                    ? "#FF5959" :
-                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) 
-                    ? "#FF5959"
-                    : ""
-                  }}
+                  style={{ color: isInvalidYear || isInvalidDate ? "#FF5959" : "" }}
                 >Year
-                  <input className={
-                    (((!(day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))) ||
-                    (!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) ||
-                    ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())))
-                    ? "date-number error" :
-                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) 
-                    ? "date-number error"
-                    : "date-number"
-                  }
+                  <input className={ isInvalidYear || isInvalidDate ? "date-number error" : "date-number" }
                   type="number" 
                   placeholder="YYYY" 
                   id="year" 
@@ -167,9 +133,7 @@ function AgeCalculator() {
                   value={year} 
                   onChange={(event) => setYear(parseInt(event.target.value))} 
                   />
-                  {((!(day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))) ||
-                  (!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) ||
-                  ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
+                  { isInvalidYear
                   ? <span className="error-type">Must be in the past</span> : ""}
                 </label>
             </div>
