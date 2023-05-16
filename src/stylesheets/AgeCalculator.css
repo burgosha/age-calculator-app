@@ -48,6 +48,16 @@
 label .label-error {
     color: var(--red);
 }
+input:active {
+    outline: none !important;
+    border-color: var(--purple);
+    caret-color: var(--purple);
+}
+input:focus {
+    outline: none !important;
+    border-color: var(--purple);
+    caret-color: var(--purple);
+}
 .date-number {
     width: 87.67px;
     height: 54px;
@@ -104,6 +114,9 @@ label .label-error {
     border: none;
     border-radius: 216px;
     cursor: pointer;
+}
+.btn-calculate:hover {
+    background: var(--black);
 }
 .btn-calculate img {
     width: 24px;
