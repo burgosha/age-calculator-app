@@ -77,6 +77,7 @@ function AgeCalculator() {
         })
       }
     }
+    console.log(errors.invalidDay);
     // //START
     // //CALCULATE CURRENT DATE
     // const currDate = new Date();
@@ -172,16 +173,16 @@ function AgeCalculator() {
             <form onSubmit={handleSubmit}>
             <div className="date-inputs">
                 <label
-                  className={
+                  style={{ color:
                     (((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear()))) ||
                     ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
                     ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
                     ? 
-                    "label-error"  :
+                    "#FF5959"  :
                     ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) 
-                    ? "label-error"
+                    ? "#FF5959"
                     : "" 
-                  }
+                  }}
                 >Day
                   <input 
                   className={
