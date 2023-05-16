@@ -8,6 +8,7 @@ function AgeCalculator() {
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
     const [age, setAge] = useState("");
+    const [formSubmitted, setFormSubmitted] = useState(false);
   
     const isValidDate = (day, month, year) => {
       const date = new Date(year, month - 1, day);
@@ -17,7 +18,28 @@ function AgeCalculator() {
         date.getDate() === day
       );
     };
-  
+
+    const isInvalidDate = (
+      (day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())
+    )
+    const isInvalidDay = (
+      ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
+      ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
+      ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
+    )
+
+    const isInvalidMonth = (
+      (!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
+      ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
+      (!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
+    )
+
+    const isInvalidYear = (
+      ((!(day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))) ||
+      (!(day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) ||
+      ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
+    )
+
     const calculateAge = (day, month, year) => {
       const today = new Date();
       const birthDate = new Date(year, month - 1, day);
@@ -49,38 +71,21 @@ function AgeCalculator() {
 
     const handleSubmit = (event) => {
       event.preventDefault();
+      setFormSubmitted(true);
       if(isValidDate(day, month, year)) { 
         setAge(calculateAge(day, month, year));
       }
     };
-    
+
     return(
         <div className="container">
             <form onSubmit={handleSubmit}>
             <div className="date-inputs">
                 <label
-                  style={{ color:
-                    (((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear()))) ||
-                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
-                    ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
-                    ? 
-                    "#FF5959"  :
-                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) 
-                    ? "#FF5959"
-                    : "" 
-                  }}
+                  style={{ color: isInvalidDay || isInvalidDate ? "#FF5959" : "" }}
                 >Day
                   <input 
-                  className={
-                    (((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear()))) ||
-                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
-                    ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
-                    ? 
-                    "date-number error"  :
-                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) 
-                    ? "date-number error"
-                    : "date-number"
-                  } 
+                  className={ isInvalidDay || isInvalidDate ? "date-number error" : "date-number" } 
                   type="number" 
                   placeholder="DD" 
                   id="day" 
@@ -89,12 +94,9 @@ function AgeCalculator() {
                   value={day} 
                   onChange={(event) => setDay(parseInt(event.target.value))}
                   />
-                  {(((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear()))) ||
-                  ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
-                  ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
-                  ? 
+                  {isInvalidDay ? 
                   <span className="error-type">Must be a valid day</span>  :
-                  ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) 
+                  isInvalidDate 
                   ? <span className="error-type">Must be a valid date</span>
                   : ""}
                 </label>
