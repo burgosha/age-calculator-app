@@ -47,45 +47,9 @@ function AgeCalculator() {
       };
     };
 
-    const [errors, setErrors] = useState({
-      invalidDay: false,
-      invalidMonth: false,
-      invalidYear: false,
-      invalidDate: false
-    });
-  
     const handleSubmit = (event) => {
       event.preventDefault();
-      if (!isValidDate(day, month, year)) {
-        setErrors({
-          ...errors,
-          invalidDate : true
-        });
-      } else if (!day || day < 1 || day > 31) {
-        setErrors({
-          ...errors,
-          invalidDay : true
-        });
-      } else if (!month || month < 1 || month > 12) {
-        setErrors({
-          ...errors,
-          invalidMonth : true
-        });
-      } else if (!year || year < 1900 || year > new Date().getFullYear()) {
-        setErrors({
-          ...errors,
-          invalidYear : true
-        });
-      } else {
-        setAge(calculateAge(day, month, year));
-        setErrors({
-          ...errors,
-          invalidDay : false,
-          invalidMonth : false,
-          invalidYear : false,
-          invalidDate : false
-      })
-      }
+      setAge(calculateAge(day, month, year));
     };
   
     // //START
@@ -182,9 +146,29 @@ function AgeCalculator() {
         <div className="container">
             <form onSubmit={handleSubmit}>
             <div className="date-inputs">
-                <label>Day
+                <label
+                  className={
+                    (((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear()))) ||
+                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
+                    ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
+                    ? 
+                    "label-error"  :
+                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) 
+                    ? "label-error"
+                    : "" 
+                  }
+                >Day
                   <input 
-                  className="date-number" 
+                  className={
+                    (((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear()))) ||
+                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
+                    ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))
+                    ? 
+                    "date-number error"  :
+                    ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())) 
+                    ? "date-number error"
+                    : "date-number"
+                  } 
                   type="number" 
                   placeholder="DD" 
                   id="day" 

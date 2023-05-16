@@ -45,6 +45,9 @@
     text-transform: uppercase;
     color: var(--grey);
 }
+label .label-error {
+    color: var(--red);
+}
 .date-number {
     width: 87.67px;
     height: 54px;
