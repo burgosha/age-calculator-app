@@ -51,7 +51,32 @@ function AgeCalculator() {
       event.preventDefault();
       setAge(calculateAge(day, month, year));
     };
-  
+
+    const [errors, setErrors] = useState({
+      invalidDay: false,
+      invalidMonth: false,
+      invalidYear: false,
+      invalidDate: false,
+    })
+    const handleErrors = () => {
+      if((((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear()))) ||
+      ((day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && !(year && year > new Date().getFullYear())) ||
+      ((day && (day < 1 || day > 31)) && !(month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear()))) {
+        setErrors({
+          ...errors,
+          invalidDay : true
+        }
+        )
+      } else {
+        setErrors({
+          ...errors,
+          invalidDay: false,
+          invalidMonth: false,
+          invalidYear: false,
+          invalidDate: false,
+        })
+      }
+    }
     // //START
     // //CALCULATE CURRENT DATE
     // const currDate = new Date();
