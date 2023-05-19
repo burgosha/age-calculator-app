@@ -8,7 +8,7 @@ function AgeCalculator() {
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
     const [age, setAge] = useState("");
-    const [formSubmitted, setFormSubmitted] = useState(false);
+    const [formSubmitted, setFormSubmitted] = useState(true);
   
     const isValidDate = (day, month, year) => {
       const date = new Date(year, month - 1, day);
@@ -71,45 +71,46 @@ function AgeCalculator() {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      setFormSubmitted(true);
       if(isValidDate(day, month, year)) { 
         setAge(calculateAge(day, month, year));
+        setFormSubmitted(true);
+      } else {
+        setFormSubmitted(false);
       }
-    };
-
+    };    
     return(
         <div className="container">
             <form onSubmit={handleSubmit}>
             <div className="date-inputs">
                 <label
-                  style={{ color: isInvalidDay || isInvalidDate ? "#FF5959" : "" }}
+                  style={{ color: isInvalidDay || isInvalidDate || !formSubmitted ? "#FF5959" : "" }}
                 >Day
                   <input 
-                  className={ isInvalidDay || isInvalidDate ? "date-number error" : "date-number" } 
+                  className={ isInvalidDay || isInvalidDate || !formSubmitted ? "date-number error" : "date-number" } 
                   type="number" 
                   placeholder="DD" 
                   id="day" 
-                  name="day" 
-                  required="required" 
+                  name="day"
                   value={day} 
                   onChange={(event) => setDay(parseInt(event.target.value))}
                   />
                   {isInvalidDay ? 
                   <span className="error-type">Must be a valid day</span>  :
                   isInvalidDate 
-                  ? <span className="error-type">Must be a valid date</span>
+                  ? <span className="error-type">Must be a valid date</span> :
+                  !formSubmitted
+                  ? <span className="error-type">This field is required</span>
                   : ""}
                 </label>
                 <label
-                  style={{color: isInvalidMonth || isInvalidDate ? "#FF5959" : "" }}
+                  style={{color: isInvalidMonth || isInvalidDate || !formSubmitted ? "#FF5959" : "" }}
                 >Month
                   <input 
-                  className={ isInvalidMonth || isInvalidDate ? "date-number error" : "date-number" } 
+                  className={ isInvalidMonth || isInvalidDate || !formSubmitted ? "date-number error" : "date-number" } 
                   type="number" 
                   placeholder="MM" 
                   id="month" 
-                  name="month" 
-                  required="required" 
+                  name="month"  
                   minLength="1" 
                   maxLength="2" 
                   value={month} 
@@ -120,14 +121,13 @@ function AgeCalculator() {
                   : ""}                  
                 </label>
                 <label
-                  style={{ color: isInvalidYear || isInvalidDate ? "#FF5959" : "" }}
+                  style={{ color: isInvalidYear || isInvalidDate || !formSubmitted ? "#FF5959" : "" }}
                 >Year
-                  <input className={ isInvalidYear || isInvalidDate ? "date-number error" : "date-number" }
+                  <input className={ isInvalidYear || isInvalidDate || !formSubmitted ? "date-number error" : "date-number" }
                   type="number" 
                   placeholder="YYYY" 
                   id="year" 
-                  name="year" 
-                  required="required" 
+                  name="year"  
                   minLength="4" 
                   maxLength="4" 
                   value={year} 
