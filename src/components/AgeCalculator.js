@@ -83,13 +83,46 @@ function AgeCalculator() {
           month: true,
           day: true
         });
+      } else if(!day && !month && !year) {
+        setFormSubmitted({
+          ...formSubmitted,
+          year: false,
+          month: false,
+          day: false
+        });
+      } else if(!day && !month) {
+        setFormSubmitted({
+          ...formSubmitted,
+          day: false,
+          month: false,
+        })
+      } else if(!month && !year) {
+        setFormSubmitted({
+          ...formSubmitted,
+          month: false,
+          year: false,
+        })
+      } else if(!day && !year) {
+        setFormSubmitted({
+          ...formSubmitted,
+          day: false,
+          year: false,
+        })
       } else if(!day) {
         setFormSubmitted({
           ...formSubmitted,
-          year: true,
-          month: true,
-          day: false
-        });
+          day: false,
+        })
+      } else if (!month) {
+        setFormSubmitted({
+          ...formSubmitted,
+          month: false,
+        })
+      } else if(!year) {
+        setFormSubmitted({
+          ...formSubmitted,
+          year: false,
+        })
       }
     };    
     return(
@@ -131,8 +164,10 @@ function AgeCalculator() {
                   onChange={(event) => setMonth(parseInt(event.target.value))} 
                   />
                   { isInvalidMonth
-                  ? <span className="error-type">Must be a valid month</span> 
-                  : ""}                  
+                  ? <span className="error-type">Must be a valid month</span> : 
+                  !formSubmitted.month
+                  ? <span className="error-type">This field is required</span> :
+                  ""}                  
                 </label>
                 <label
                   style={{ color: isInvalidYear || isInvalidDate || !formSubmitted.year ? "#FF5959" : "" }}
@@ -148,7 +183,10 @@ function AgeCalculator() {
                   onChange={(event) => setYear(parseInt(event.target.value))} 
                   />
                   { isInvalidYear
-                  ? <span className="error-type">Must be in the past</span> : ""}
+                  ? <span className="error-type">Must be in the past</span>  : 
+                  !formSubmitted.year
+                  ? <span className="error-type">This field is required</span> :
+                  ""}
                 </label>
             </div>
             <div className="caltulate-separator">
