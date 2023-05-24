@@ -17,3 +17,13 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
+.attribution {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 20px;
+  color: #151515;
+}
+.attribution a {
+  text-decoration: none;
+  color: #854DFF;
+}
