@@ -22,7 +22,6 @@ function AgeCalculator() {
         date.getDate() === day
       );
     };
-
     const isInvalidDate = (
       (day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())
     )
