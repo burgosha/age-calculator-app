@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import "../stylesheets/AgeCalculator.css"
 import ArrowLogo from "../images/icon-arrow.svg";
+import Number from "./Number";
 
 function AgeCalculator() {
     const [day, setDay] = useState("");
@@ -142,7 +143,7 @@ function AgeCalculator() {
         })
         setInvalidDate(true);
       }
-    };    
+    };
     return(
         <div className="container">
             <form onSubmit={handleSubmit}>
@@ -219,9 +220,9 @@ function AgeCalculator() {
             </div>
             </form>
             <div className="results">
-                <p className="results-info"><span>{age ? age.years : "--"}</span> years</p>
-                <p className="results-info"><span>{age ? age.months : "--"}</span> months</p>
-                <p className="results-info"><span>{age ? age.days : "--"}</span> days</p>
+                <p className="results-info"><span>{age ? <Number n={age.years} /> : "--"}</span> years</p>
+                <p className="results-info"><span>{age ? <Number n={age.months} /> : "--"}</span> months</p>
+                <p className="results-info"><span>{age ? <Number n={age.days} /> : "--"}</span> days</p>
             </div>
         </div>
     )
