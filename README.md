@@ -53,7 +53,7 @@ Users should be able to:
 - Flexbox
 - Mobile-first workflow
 - [React](https://reactjs.org/) - JS library
-- [React-Spring] (https://www.react-spring.dev/) - React Library
+- [React-Spring](https://www.react-spring.dev/) - React Library
 
 ### What I learned
 
