@@ -13,7 +13,8 @@ function AgeCalculator() {
       month: true,
       day: true
     });
-  
+    const [invalidDate, setInvalidDate] = useState(false);
+    
     const isValidDate = (day, month, year) => {
       const date = new Date(year, month - 1, day);
       return (
@@ -22,6 +23,22 @@ function AgeCalculator() {
         date.getDate() === day
       );
     };
+
+    // const verifyDate = (day, month, year) => {
+    //   const date = new Date(year, month - 1, day);
+    //   if(
+    //     date.getFullYear() !== year ||
+    //     date.getMonth() !== month - 1 ||
+    //     date.getDate() !== day
+    //   ) {
+    //     setInvalidDate(true);
+    //   } else if(date.getMonth() + 1 !== month) {
+    //     setInvalidDate(true);
+    //   } else {
+    //     setInvalidDate(false);
+    //   }
+    // }
+
     const isInvalidDate = (
       (day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())
     )
@@ -74,6 +91,7 @@ function AgeCalculator() {
 
     const handleSubmit = (event) => {
       event.preventDefault();
+      // verifyDate(day, month, year);
       if(isValidDate(day, month, year)) { 
         setAge(calculateAge(day, month, year));
         setFormSubmitted({
@@ -82,6 +100,7 @@ function AgeCalculator() {
           month: true,
           day: true
         });
+        setInvalidDate(false);
       } else if(!day && !month && !year) {
         setFormSubmitted({
           ...formSubmitted,
@@ -89,39 +108,54 @@ function AgeCalculator() {
           month: false,
           day: false
         });
+        setInvalidDate(false);
       } else if(!day && !month) {
         setFormSubmitted({
           ...formSubmitted,
           day: false,
           month: false,
-        })
+        });
+        setInvalidDate(false);
       } else if(!month && !year) {
         setFormSubmitted({
           ...formSubmitted,
           month: false,
           year: false,
-        })
+        });
+        setInvalidDate(false);
       } else if(!day && !year) {
         setFormSubmitted({
           ...formSubmitted,
           day: false,
           year: false,
-        })
+        });
+        setInvalidDate(false);
       } else if(!day) {
         setFormSubmitted({
           ...formSubmitted,
           day: false,
-        })
+        });
+        setInvalidDate(false);
       } else if (!month) {
         setFormSubmitted({
           ...formSubmitted,
           month: false,
-        })
+        });
+        setInvalidDate(false);
       } else if(!year) {
         setFormSubmitted({
           ...formSubmitted,
           year: false,
+        });
+        setInvalidDate(false);
+      } else {
+        setFormSubmitted({
+          ...formSubmitted,
+          day: true,
+          month: true,
+          year: true
         })
+        setInvalidDate(true);
       }
     };    
     return(
@@ -129,10 +163,10 @@ function AgeCalculator() {
             <form onSubmit={handleSubmit}>
             <div className="date-inputs">
                 <label
-                  style={{ color: isInvalidDay || isInvalidDate || !formSubmitted.day ? "#FF5959" : "" }}
+                  style={{ color: isInvalidDay || isInvalidDate || !formSubmitted.day || invalidDate ? "#FF5959" : "" }}
                 >Day
                   <input 
-                  className={ isInvalidDay || isInvalidDate || !formSubmitted.day ? "date-number error" : "date-number" } 
+                  className={ isInvalidDay || isInvalidDate || !formSubmitted.day || invalidDate ? "date-number error" : "date-number" } 
                   type="number" 
                   placeholder="DD" 
                   id="day" 
@@ -142,17 +176,17 @@ function AgeCalculator() {
                   />
                   {isInvalidDay ? 
                   <span className="error-type">Must be a valid day</span>  :
-                  isInvalidDate 
+                  isInvalidDate || invalidDate
                   ? <span className="error-type">Must be a valid date</span> :
                   !formSubmitted.day
                   ? <span className="error-type">This field is required</span>
                   : ""}
                 </label>
                 <label
-                  style={{color: isInvalidMonth || isInvalidDate || !formSubmitted.month ? "#FF5959" : "" }}
+                  style={{color: isInvalidMonth || isInvalidDate || !formSubmitted.month || invalidDate ? "#FF5959" : "" }}
                 >Month
                   <input 
-                  className={ isInvalidMonth || isInvalidDate || !formSubmitted.month ? "date-number error" : "date-number" } 
+                  className={ isInvalidMonth || isInvalidDate || !formSubmitted.month || invalidDate ? "date-number error" : "date-number" } 
                   type="number" 
                   placeholder="MM" 
                   id="month" 
@@ -169,9 +203,9 @@ function AgeCalculator() {
                   ""}                  
                 </label>
                 <label
-                  style={{ color: isInvalidYear || isInvalidDate || !formSubmitted.year ? "#FF5959" : "" }}
+                  style={{ color: isInvalidYear || isInvalidDate || !formSubmitted.year || invalidDate ? "#FF5959" : "" }}
                 >Year
-                  <input className={ isInvalidYear || isInvalidDate || !formSubmitted.year ? "date-number error" : "date-number" }
+                  <input className={ isInvalidYear || isInvalidDate || !formSubmitted.year || invalidDate ? "date-number error" : "date-number" }
                   type="number" 
                   placeholder="YYYY" 
                   id="year" 
