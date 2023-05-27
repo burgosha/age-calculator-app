@@ -41,8 +41,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://github.com/burgosha/age-calculator-app)
-- Live Site URL: [Add live site URL here](https://bha-age-calculator-app.netlify.app/)
+- Solution URL: [GitHub Repository](https://github.com/burgosha/age-calculator-app)
+- Live Site URL: [Click here](https://bha-age-calculator-app.netlify.app/)
 
 ## My process
 
