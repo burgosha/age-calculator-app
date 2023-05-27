@@ -14,7 +14,7 @@ function AgeCalculator() {
       day: true
     });
     const [invalidDate, setInvalidDate] = useState(false);
-    
+
     const isValidDate = (day, month, year) => {
       const date = new Date(year, month - 1, day);
       return (
@@ -23,21 +23,6 @@ function AgeCalculator() {
         date.getDate() === day
       );
     };
-
-    // const verifyDate = (day, month, year) => {
-    //   const date = new Date(year, month - 1, day);
-    //   if(
-    //     date.getFullYear() !== year ||
-    //     date.getMonth() !== month - 1 ||
-    //     date.getDate() !== day
-    //   ) {
-    //     setInvalidDate(true);
-    //   } else if(date.getMonth() + 1 !== month) {
-    //     setInvalidDate(true);
-    //   } else {
-    //     setInvalidDate(false);
-    //   }
-    // }
 
     const isInvalidDate = (
       (day && (day < 1 || day > 31)) && (month && (month < 1 || month > 12)) && (year && year > new Date().getFullYear())
